@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="Burglar">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.998 0.002</probabilities>
+		</cpt>
+		<cpt id="fire_on_site">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.99 0.01000000000000001</probabilities>
+		</cpt>
+		<cpt id="ambient_temperature">
+			<state id="lessm10" />
+			<state id="fm10t0" />
+			<state id="f0t10" />
+			<state id="f10t20" />
+			<state id="f20t30" />
+			<state id="f30t50" />
+			<state id="more50" />
+			<parents>fire_on_site</parents>
+			<probabilities>0.01 0.09000000000000001 0.4000000000000001 0.4000000000000001 0.09000000000000001 0.009989999999999983 1e-05 0 0 0 0 0.05 0.15 0.8</probabilities>
+		</cpt>
+		<cpt id="ELECTRICAL_GRID_OFF">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ambient_temperature</parents>
+			<probabilities>0.985 0.015 0.999 0.001 0.999 0.001 0.999 0.001 0.99 0.01 0.95 0.05 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="WAM_fail">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ELECTRICAL_GRID_OFF</parents>
+			<probabilities>0.99 0.01 0 1</probabilities>
+		</cpt>
+		<cpt id="Worker">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.95 0.05</probabilities>
+		</cpt>
+		<cpt id="burglar_sensor_malf">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.95 0.05000000000000004</probabilities>
+		</cpt>
+		<cpt id="BURGLAR_ON">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Burglar Worker WAM_fail burglar_sensor_malf</parents>
+			<probabilities>1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<cpt id="CONDITIONING_FAIL">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ambient_temperature ELECTRICAL_GRID_OFF</parents>
+			<probabilities>0.99 0.01000000000000001 0 1 0.99 0.01000000000000001 0 1 0.99 0.01000000000000001 0 1 0.99 0.01000000000000001 0 1 0.98 0.02 0 1 0.95 0.05 0 1 0.9 0.1 0 1</probabilities>
+		</cpt>
+		<cpt id="WIB_battery">
+			<state id="less25" />
+			<state id="f25t50" />
+			<state id="f50t75" />
+			<state id="f75t100" />
+			<probabilities>0.01 0.04 0.05 0.9</probabilities>
+		</cpt>
+		<cpt id="ATM_traffic_overload">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="UNIT_TEMP_HIGH">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ambient_temperature CONDITIONING_FAIL</parents>
+			<probabilities>1 0 1 0 1 0 1 0 1 0 1 0 0.9 0.1 0.5 0.5 0.5 0.5 0 1 0.2 0.8 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<deterministic id="WIB_TEMP_HIGH">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>UNIT_TEMP_HIGH</parents>
+			<resultingstates>State0 State1</resultingstates>
+		</deterministic>
+		<cpt id="WIB_battery_failiure">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Burglar ELECTRICAL_GRID_OFF WIB_battery WIB_TEMP_HIGH</parents>
+			<probabilities>0.99 0.01000000000000001 0.98 0.02 0.99 0.01000000000000001 0.98 0.02 0.99 0.01000000000000001 0.98 0.02 0.99 0.01000000000000001 0.98 0.02 0.01 0.99 0.01000000000000001 0.99 0.4000000000000001 0.6 0.35 0.65 0.6 0.4 0.55 0.45 0.6 0.4 0.55 0.45 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.01 0.99 0.01000000000000001 0.99 0.4000000000000001 0.6 0.35 0.65 0.6 0.4 0.55 0.45 0.6 0.4 0.55 0.45</probabilities>
+		</cpt>
+		<cpt id="WAF_faulty">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="WAF_low_noise_amplifier_faulty">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="CELL_OFF">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>WIB_battery_failiure WAF_faulty WAF_low_noise_amplifier_faulty</parents>
+			<probabilities>1 0 0 1 0 1 0 1 0.6 0.4 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<cpt id="WSC_phase_difference_jammed_to_zero_reading">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="ATM_processor_faulty">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="Traffic_flow_in_non_existent_ATM_connection">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.9999 9.999999999998899e-05</probabilities>
+		</cpt>
+		<cpt id="BTS_OPERATION_DEGRADED">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>WSC_phase_difference_jammed_to_zero_reading ATM_traffic_overload ATM_processor_faulty Traffic_flow_in_non_existent_ATM_connection</parents>
+			<probabilities>1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<cpt id="BTS_OFF">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>WIB_battery_failiure ELECTRICAL_GRID_OFF CELL_OFF BTS_OPERATION_DEGRADED</parents>
+			<probabilities>0.9999 9.999999999998899e-05 0.99 0.01 0.99 0.01 0.9 0.1 0.7 0.3 0.6 0.4 0.4 0.6 0.3 0.7 0.9999 0.0001 0.99 0.01 0.99 0.01 0.9 0.1 0.4 0.6 0.3 0.7 0.09999999999999996 0.9 0.01 0.99</probabilities>
+		</cpt>
+		<cpt id="fire_sensor_malf">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.95 0.05000000000000004</probabilities>
+		</cpt>
+		<cpt id="FIRE_ALARM">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>WAM_fail fire_sensor_malf fire_on_site</parents>
+			<probabilities>1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<cpt id="HEATER_FAIL">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ELECTRICAL_GRID_OFF ambient_temperature</parents>
+			<probabilities>0.9 0.1 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.99 0.01000000000000001 0.5 0.5 0.9 0.1 0 1 0 1 0 1 0 1 0 1 0.5 0.5</probabilities>
+		</cpt>
+		<cpt id="smoke_sensor_malf">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.95 0.05000000000000004</probabilities>
+		</cpt>
+		<cpt id="SMOKE_ALARM">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>WAM_fail smoke_sensor_malf fire_on_site</parents>
+			<probabilities>1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1</probabilities>
+		</cpt>
+		<cpt id="UNIT_TEMP_LOW">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>ambient_temperature HEATER_FAIL</parents>
+			<probabilities>0.2 0.8 0 1 0.5 0.5 0 1 1 0 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 4.1.4109.0 ACADEMIC" name="Network1">
+			<node id="Burglar">
+				<name>Burglar</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>295 313 470 406</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Worker">
+				<name>Worker</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>447 315 622 408</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WAM_fail">
+				<name>WAM_fail</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>573 568 748 661</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="ELECTRICAL_GRID_OFF">
+				<name>ELECTRICAL_GRID_OFF</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>735 321 910 414</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="BURGLAR_ON">
+				<name>BURGLAR_ON</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>412 462 529 547</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WIB_battery_failiure">
+				<name>WIB_battery_failiure</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1242 324 1417 417</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="CELL_OFF">
+				<name>CELL_OFF</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1303 1089 1362 1128</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="CONDITIONING_FAIL">
+				<name>CONDITIONING_FAIL</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>943 492 1002 531</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="HEATER_FAIL">
+				<name>HEATER_FAIL</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1102 495 1161 534</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="FIRE_ALARM">
+				<name>FIRE_ALARM</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>448 598 497 624</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="SMOKE_ALARM">
+				<name>SMOKE_ALARM</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>447 718 496 744</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="smoke_sensor_malf">
+				<name>Smoke Sensor malf</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>209 688 384 781</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="fire_sensor_malf">
+				<name>fire_sensor_malf</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>209 564 384 657</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="burglar_sensor_malf">
+				<name>burglar_sensor_malf</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>207 457 382 550</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="ambient_temperature">
+				<name>ambient_temperature</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>952 909 1127 1002</position>
+				<barchart active="true" width="129" height="144" />
+			</node>
+			<node id="UNIT_TEMP_HIGH">
+				<name>UNIT_TEMP_HIGH</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>895 669 1070 762</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="UNIT_TEMP_LOW">
+				<name>UNIT_TEMP_LOW</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1047 673 1222 766</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="fire_on_site">
+				<name>fire_on_site</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>576 685 751 778</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WIB_battery">
+				<name>WIB_battery</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1239 132 1414 225</position>
+				<barchart active="true" width="128" height="90" />
+			</node>
+			<node id="WAF_faulty">
+				<name>WAF_faulty</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1386 810 1445 849</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WIB_TEMP_HIGH">
+				<name>WIB_TEMP_HIGH</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1562 352 1621 391</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="ATM_traffic_overload">
+				<name>ATM_traffic_overload</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1832 820 1891 859</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="BTS_OPERATION_DEGRADED">
+				<name>BTS_OPERATION_DEGRADED</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1470 1090 1529 1129</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="BTS_OFF">
+				<name>BTS_OFF</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1007 1301 1066 1340</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Traffic_flow_in_non_existent_ATM_connection">
+				<name>Traffic_flow_in_non_existent_ATM_connection</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1832 1011 1891 1050</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="ATM_processor_faulty">
+				<name>ATM_processor_faulty</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1832 912 1891 951</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WSC_phase_difference_jammed_to_zero_reading">
+				<name>WSC_phase_difference_jammed_to_zero_reading</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1664 820 1723 859</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="WAF_low_noise_amplifier_faulty">
+				<name>WAF_low_noise_amplifier_faulty</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1496 906 1555 945</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
