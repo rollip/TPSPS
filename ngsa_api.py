@@ -1,5 +1,6 @@
 import requests
 import json
+import bayes_nodes
 
 class Accident:
     def __init__(self, mo_identifier, perceived_severity,  displayed_text):
@@ -15,11 +16,12 @@ class Accident:
             data = response.json()
             accidents = []
             for accident_data in data.get('accidents', []):
-                accidents.append(cls(
-                    accident_data.get('mo_identifier', None),
-                    accident_data.get('perceived_severity', None),
-                    accident_data.get('displayed_text', None)
-                ))
+                if accident_data.get('displayed_text') in bayes_nodes.LIST:
+                    accidents.append(cls(
+                        accident_data.get('mo_identifier', None),
+                        accident_data.get('perceived_severity', None),
+                        accident_data.get('displayed_text', None)
+                    ))
             return accidents
         else:
             return None
@@ -37,7 +39,7 @@ class Accident:
 
     @classmethod
     def api_delete(cls, id):
-        api_url = "https://example.com/ngsa_api/delete"
+        api_url = "https://127.0.0.1/ngsa_api/delete"
         payload = {
             'id': id
         }
@@ -57,7 +59,7 @@ class BaseStation:
 
     @classmethod
     def bs_readings(cls):
-        api_url = "https://example.com/ngsa_api/bs_readings"
+        api_url = "https://127.0.0.1/ngsa_api/bs_readings"
         response = requests.get(api_url)
         if response.status_code == 200:
             data = response.json()
