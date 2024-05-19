@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 import logging
+from functools import lru_cache
 
 
 # Настройка логирования
@@ -15,12 +16,14 @@ logging.basicConfig(
 
 
 class Database:
+
     def __init__(self, host="localhost", user="root", password="password", database="mydatabase"):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
         self.connection_pool = None
+
 
     def connect(self):
         try:
@@ -78,6 +81,7 @@ class RiskAccident:
         self.probability = probability
 
     @staticmethod
+
     def delete_old_risks(db, mo_identifier):
         try:
             connection = db.get_connection()
@@ -92,6 +96,7 @@ class RiskAccident:
             cursor.close()
             connection.close()
 
+    @lru_cache(maxsize=128)
     def save_to_database(self):
         try:
             connection = self.db.get_connection()
@@ -107,6 +112,7 @@ class RiskAccident:
             cursor.close()
             connection.close()
 
+    @lru_cache(maxsize=128)
     def delete_from_database(self):
         try:
             connection = self.db.get_connection()
