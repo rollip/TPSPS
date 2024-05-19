@@ -4,6 +4,19 @@ import pysmile_license
 import ngsa_api as ng
 from datetime import datetime
 import database
+import logging
+
+
+
+# Настройка логирования
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ]
+)
 
 # Степени уверенности для Percieved Severity МИ
 
@@ -82,10 +95,10 @@ def BayesianNetwork(MO_IDENTIFIER):
         if severity is not None:
             accident = ng.Accident(MO_IDENTIFIER, severity, id)
             if accident not in accidents:
-                print(f'Событие на {accident.mo_identifier}, Важность: {accident.perceived_severity}, Аварийное сообщение: {accident.displayed_text}, Степень уверенности: {true_belief}')
+                logging.info('Событие на %s, Важность: %s, Аварийное сообщение: %s, Степень уверенности: %s',accident.mo_identifier, accident.perceived_severity, accident.displayed_text, true_belief)
                 database.RiskAccident.save_to_database()
                 if ng.Accident.to_api(accident):
-                    print('--Отправлено в API NGSA--')
+                    logging.info('--Отправлено в API NGSA--')
 
 
 
